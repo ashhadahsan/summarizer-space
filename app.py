@@ -11,6 +11,9 @@ import numpy as np
 from datetime import datetime
 import logging
 from constants import sub_themes_dict
+from huggingface_hub import from_pretrained_keras
+
+
 
 date = datetime.now().strftime(r"%Y-%m-%d")
 model_classes = {
@@ -43,7 +46,7 @@ def load_t5():
 @st.cache_resource
 def custom_model():
     st.success("Loaded custom summarization model!")
-    return pipeline("summarization", model="my_awesome_sum/")
+    return pipeline("summarization", model="ashhadahsan/amazon-review-summarizer")
 
 
 @st.cache_resource
@@ -61,14 +64,14 @@ def load_one_line_summarizer(model):
 @st.cache_resource
 def classify_category():
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    new_model = load_model("model")
+    new_model = from_pretrained_keras("ashhadahsan/amazon-category-classifier")
     st.success("Loaded theme classification model!")
     return tokenizer, new_model
 
 @st.cache_resource
 def classify_sub_theme():
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
-    new_model = load_model("sub_theme_model")
+    new_model =from_pretrained_keras("ashhadahsan/amazon-sub-theme")
     st.success("Loaded sub-theme-model")
     return tokenizer, new_model
 
