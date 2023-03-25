@@ -1,0 +1,8 @@
+openpyxl
+pandas
+simplet5
+streamlit
+transformers
+stqdm
+torch
+tensorflow
