@@ -31,41 +31,45 @@ model_classes = {
 }
 
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def load_t5():
     model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
 
     tokenizer = AutoTokenizer.from_pretrained("t5-base")
+    st.success("Loaded t5-base model!")
     return model, tokenizer
 
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def custom_model():
+    st.success("Loaded custom summarization model!")
     return pipeline("summarization", model="my_awesome_sum/")
 
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def convert_df(df):
     # IMPORTANT: Cache the conversion to prevent computation on every rerun
     return df.to_csv(index=False).encode("utf-8")
 
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def load_one_line_summarizer(model):
+    st.success("Loaded one-line-summary model!")
     return model.load_model("t5", "snrspeaks/t5-one-line-summary")
 
 
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def classify_category():
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     new_model = load_model("model")
+    st.success("Loaded theme classification model!")
     return tokenizer, new_model
 
-
-@st.cache(allow_output_mutation=True, suppress_st_warning=True)
+@st.cache_resource
 def classify_sub_theme():
     tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
     new_model = load_model("sub_theme_model")
+    st.success("Loaded sub-theme-model")
     return tokenizer, new_model
 
 
